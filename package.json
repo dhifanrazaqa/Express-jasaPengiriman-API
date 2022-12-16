@@ -1,0 +1,25 @@
+{
+  "name": "jasapengirimanapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon ./src/index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhifanrazaqa/jasaPengiriman-API"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhifanrazaqa/jasaPengiriman-API/issues"
+  },
+  "homepage": "https://github.com/dhifanrazaqa/jasaPengiriman-API#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20"
+  }
+}
