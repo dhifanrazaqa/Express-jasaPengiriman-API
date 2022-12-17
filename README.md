@@ -6,6 +6,13 @@ The final design looks like this:
 ![PBDTugasAkhir drawio (14)](https://user-images.githubusercontent.com/67745986/208246808-2c1948d4-ef86-439b-808c-fcbe4c8ec003.png)
 
 
+# How to run:
+   ● Install node.js
+   
+   ● npm install
+   
+   ● npm run start:dev
+
 # API documentation:
    # Transaksi
    ● Get all transaction from transaksi table
