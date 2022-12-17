@@ -1,8 +1,9 @@
 const express = require('express');
-const {  } = require('../controllers');
+const { getKurirPackage, updateKurirPackage } = require('../controllers');
 
 const router = express.Router();
 
-router.get('/', () => {});
+router.get('/:id', getKurirPackage);
+router.put('/:id', updateKurirPackage);
 
 module.exports = router;

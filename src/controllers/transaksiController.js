@@ -16,7 +16,7 @@ const getTransaksi = (req, res) => {
     , function (error, results) {
         if(error) throw error;  
         res.send({ 
-            success: true, 
+            status: "success", 
             message: 'Berhasil ambil data!',
             data: results 
         });
@@ -65,16 +65,73 @@ const addTransaksi = (req, res) => {
             if(error) throw error;
             res.status(201);
             res.send({ 
-                success: true, 
+                status: "success", 
                 message: 'Berhasil tambah data!',
             });
         });
         connection.release();
     })
   })
-}
+};
+
+const getTransaksiByid = (req, res) => {
+  const { id } = req.params;
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    connection.query(
+        `
+        SELECT * FROM transaksi WHERE no_resi = ?;
+        `
+    , [id],
+    function (error, results) {
+        if(error) throw error;  
+        if(results.length !== 0){
+          res.send({ 
+            status: "success", 
+            message: 'Berhasil ambil data!',
+            data: results
+          });
+        } else {
+          res.status(404).json({
+            status: "fail",
+            message: "Data tidak ditemukan"
+          });
+        }
+    });
+    connection.release();
+  })
+};
+
+const delTransaksi = (req, res) => {
+  const { id } = req.params;
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    connection.query(
+        `
+        DELETE FROM transaksi WHERE no_resi = ?;
+        `
+    , [id],
+    function (error, results) {
+        if(error) throw error;
+        if (results.affectedRows === 0) {
+          res.status(404).json({
+            status: "fail",
+            message: "Data tidak ditemukan"
+          });
+        } else {
+          res.send({ 
+            status: "success",
+            message: 'Berhasil hapus data!',
+          });
+        }
+    });
+    connection.release();
+  })
+};
 
 module.exports = {
   getTransaksi,
   addTransaksi,
+  getTransaksiByid,
+  delTransaksi,
 };
