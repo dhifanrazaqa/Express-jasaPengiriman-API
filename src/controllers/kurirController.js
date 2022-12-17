@@ -48,7 +48,7 @@ const updateKurirPackage = (req, res) => {
         });
     });
     connection.release();
-})
+  });
 };
 
 module.exports = {

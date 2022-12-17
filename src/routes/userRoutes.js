@@ -1,8 +1,13 @@
 const express = require('express');
-const {  } = require('../controllers');
+const { getCustomer, getPenerima, getKurir, addCustomer, addPenerima, addKurir } = require('../controllers');
 
 const router = express.Router();
 
-router.get('/', () => {});
+router.get('/customer', getCustomer);
+router.post('/customer', addCustomer);
+router.get('/penerima', getPenerima);
+router.post('/penerima', addPenerima);
+router.get('/kurir', getKurir);
+router.post('/kurir', addKurir);
 
 module.exports = router;

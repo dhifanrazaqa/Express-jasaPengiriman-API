@@ -34,24 +34,34 @@ const addTransaksi = (req, res) => {
     else if (seriNumb.length == 1) seriNumb = `00${seriNumb}`;
     else seriNumb = `000`;
 
-    const {id_customer, id_penerima, id_kurir} = req.body;
+    const {
+      nama_barang,
+      berat_barang,
+      jenis_barang,
+      ongkir,
+      metode_pengiriman,
+      status,
+      id_customer,
+      id_penerima,
+      id_kurir,
+    } = req.body;
     const no_resi = `BR${seriNumb}-${id_customer.slice(-1)}${id_penerima.slice(-1)}${id_kurir.slice(-1)}`
     const tanggal_kirim = new Date();
     const tanggal_terima = null;
   
     const data = {
       no_resi: no_resi,
-      nama_barang: req.body.nama_barang,
-      berat_barang: req.body.berat_barang,
-      jenis_barang: req.body.jenis_barang,
-      ongkir: req.body.ongkir,
-      metode_pengiriman: req.body.metode_pengiriman,
-      status: req.body.status,
+      nama_barang: nama_barang,
+      berat_barang: berat_barang,
+      jenis_barang: jenis_barang,
+      ongkir: ongkir,
+      metode_pengiriman: metode_pengiriman,
+      status: status,
       tanggal_kirim: tanggal_kirim,
       tanggal_terima: tanggal_terima,
-      id_customer: req.body.id_customer,
-      id_penerima: req.body.id_penerima,
-      id_kurir: req.body.id_kurir
+      id_customer: id_customer,
+      id_penerima: id_penerima,
+      id_kurir: id_kurir
     }
   
     pool.getConnection(function(err, connection) {
@@ -129,9 +139,53 @@ const delTransaksi = (req, res) => {
   })
 };
 
+const updateTransaksi = (req, res) => {
+  const { id } = req.params;
+  const {
+    nama_barang,
+    berat_barang,
+    jenis_barang,
+    ongkir,
+    metode_pengiriman,
+    status,
+    id_customer,
+    id_penerima,
+    id_kurir,
+  } = req.body;
+
+  const dataEdit = {
+    nama_barang: nama_barang,
+    berat_barang: berat_barang,
+    jenis_barang: jenis_barang,
+    ongkir: ongkir,
+    metode_pengiriman: metode_pengiriman,
+    status: status,
+    id_customer: id_customer,
+    id_penerima: id_penerima,
+    id_kurir: id_kurir
+  }
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    connection.query(
+        `
+        UPDATE transaksi SET ? WHERE no_resi = ?;
+        `
+    , [dataEdit, id],
+    function (error, results) {
+        if(error) throw error;  
+        res.send({ 
+            success: true, 
+            message: 'Berhasil edit data!',
+        });
+    });
+    connection.release();
+  });
+};
+
 module.exports = {
   getTransaksi,
   addTransaksi,
   getTransaksiByid,
   delTransaksi,
+  updateTransaksi,
 };
